@@ -145,7 +145,7 @@ body:has(#ageGateModal:not(.fade-out):not([style*="display: none"])) {
   font-weight: 800;
   line-height: 1.15;
   color: #fff;
-  margin-bottom: 1.25rem;
+  margin-bottom: 2rem;
 }
 
 .age-gate-notice-pill {
@@ -3108,7 +3108,7 @@ html, body {
 
   .age-gate-card h2 {
     font-size: 1.45rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
   }
 
   .age-gate-notice-pill {
