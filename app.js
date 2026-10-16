@@ -1520,6 +1520,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.add("age-gate-active");
   }
 
+  // Explicitly ensure video player is stopped on initial load
+  const initialVideo = document.getElementById("html5VideoPlayer");
+  if (initialVideo) {
+    initialVideo.pause();
+  }
+
   // Both age gate buttons open the video player with the same glitch transition as the cards
   const enterToVideo = () => {
     dismissAgeGate();
