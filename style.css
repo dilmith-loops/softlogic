@@ -3071,40 +3071,66 @@ html, body {
     transform: none;
   }
 
-  /* Age gate */
+  /* Age gate: compact so both buttons fit on screen */
   .age-gate-overlay {
     padding: 0.75rem;
   }
 
   .age-gate-card {
-    padding: 1.75rem 1.1rem;
+    padding: 1.25rem 1rem;
   }
 
   .age-gate-card .site-logo-badge.large {
-    font-size: 1.9rem;
+    font-size: 1.6rem;
+  }
+
+  .age-gate-logo {
+    margin-bottom: 0.6rem;
+  }
+
+  .age-gate-card h2 {
+    font-size: 1.45rem;
+    margin-bottom: 0.75rem;
   }
 
   .age-gate-notice-pill {
-    padding: 0.45rem 1.75rem;
-    font-size: 0.85rem;
+    padding: 0.35rem 1.5rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
   }
 
   .age-gate-card .age-gate-desc {
-    font-size: 0.98rem;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    margin-bottom: 0.35rem;
   }
 
   .age-gate-link {
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
   }
 
   .btn-gate-outline {
-    padding: 0.95rem 1rem;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .age-gate-card .age-gate-actions {
+    gap: 0.6rem;
   }
 
   .age-gate-parental {
-    margin-top: 1.75rem;
-    font-size: 0.95rem;
+    margin-top: 1rem;
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .age-gate-parental h3 {
+    font-size: 0.85rem;
+  }
+
+  .age-gate-parental p + p {
+    display: none; /* drop the second parental line on phones */
   }
 
   /* Video player: full-screen sheet */
@@ -3295,10 +3321,6 @@ html, body {
   .video-grid,
   .video-grid.compact {
     grid-template-columns: 1fr;
-  }
-
-  .age-gate-card h2 {
-    font-size: 1.6rem;
   }
 
   .site-logo-badge {
