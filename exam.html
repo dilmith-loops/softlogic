@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3-Minute Breast Self-Exam | CheckHub</title>
+  <meta name="description" content="A guided 3-minute breast self-examination: six simple steps with on-screen instructions.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23ff9000%22/><text x=%2250%22 y=%2272%22 font-size=%2266%22 font-family=%22Arial%22 font-weight=%22bold%22 text-anchor=%22middle%22>C</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20261016c">
+  <style>
+    body {
+      background: radial-gradient(ellipse at top, #1a1206 0%, #000 60%);
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    /* Header */
+    .exam-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+    }
+
+    .exam-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      padding: 0.5rem 0.9rem;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-full);
+      transition: color var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .exam-back:hover {
+      color: #fff;
+      border-color: var(--hub-orange);
+    }
+
+    .exam-main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem 2.5rem;
+    }
+
+    .exam-heading {
+      text-align: center;
+      margin: 0.5rem 0 1.25rem;
+    }
+
+    .exam-heading h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      letter-spacing: 1px;
+      line-height: 1;
+      color: #fff;
+    }
+
+    .exam-heading p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-top: 0.4rem;
+    }
+
+    /* Story-style progress segments */
+    .exam-progress {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 1rem;
+    }
+
+    .exam-progress-seg {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.15);
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .exam-progress-seg span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: var(--hub-orange);
+    }
+
+    /* Slide stage */
+    .exam-stage {
+      position: relative;
+      background: linear-gradient(145deg, #17171d 0%, #0e0e12 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      height: 340px;
+    }
+
+    .exam-slide {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.75rem 2.25rem;
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .exam-slide.is-active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .exam-slide.is-past {
+      transform: translateX(-40px);
+    }
+
+    .exam-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .exam-visual svg {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+      max-height: 280px;
+    }
+
+    .exam-step-num {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--hub-orange);
+      text-transform: uppercase;
+    }
+
+    .exam-slide h2 {
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: #fff;
+      margin: 0.4rem 0 0.6rem;
+    }
+
+    .exam-slide .exam-summary {
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+      line-height: 1.5;
+    }
+
+    /* SVG illustration styling + motion */
+    .ill-line { fill: none; stroke: #ff9000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .ill-soft { fill: none; stroke: rgba(255, 255, 255, 0.25); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .ill-fill { fill: rgba(255, 144, 0, 0.12); }
+    .ill-dot { fill: #ff9000; }
+
+    .anim-breathe { animation: breathe 3s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+    .anim-raise { animation: raise 3s ease-in-out infinite; transform-box: fill-box; }
+    .anim-raise.left { transform-origin: 100% 100%; }
+    .anim-raise.right { transform-origin: 0% 100%; }
+    .anim-ring { animation: ring 2.4s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+    .anim-ring.delay { animation-delay: 1.2s; }
+    .anim-orbit { animation: orbit 2.6s linear infinite; transform-origin: 160px 130px; }
+    .anim-scan { animation: scan 3.5s ease-in-out infinite; }
+    .anim-pop { animation: pop 2s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+
+    @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+    @keyframes raise { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-4deg); } }
+    @keyframes ring { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(1.6); opacity: 0; } }
+    @keyframes orbit { to { transform: rotate(360deg); } }
+    @keyframes scan { 0%, 100% { transform: translateX(-40px); } 50% { transform: translateX(40px); } }
+    @keyframes pop { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+    /* Controls */
+    .exam-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .exam-time {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      min-width: 92px;
+    }
+
+    .exam-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .exam-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border-light);
+      background: var(--bg-tertiary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .exam-btn:hover {
+      border-color: var(--hub-orange);
+    }
+
+    .exam-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .exam-btn.play {
+      width: 56px;
+      height: 56px;
+      background: var(--hub-orange);
+      border-color: var(--hub-orange);
+      color: #000;
+    }
+
+    .exam-btn.play:hover {
+      transform: scale(1.06);
+    }
+
+    .exam-btn.play svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .exam-step-label {
+      min-width: 92px;
+      text-align: right;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    /* Spotify-style lyrics panel */
+    .lyrics-panel {
+      position: relative;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1.75rem 0;
+      background: var(--lyrics-bg, #b5520b);
+      transition: background-color 0.8s ease;
+      overflow: hidden;
+    }
+
+    .lyrics-panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.6);
+      margin-bottom: 0.75rem;
+    }
+
+    .lyrics-scroll {
+      height: 280px;
+      overflow-y: auto;
+      scrollbar-width: none;
+      padding-bottom: 140px;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 24px, #000 75%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0, #000 24px, #000 75%, transparent 100%);
+    }
+
+    .lyrics-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .lyrics-list {
+      padding-top: 16px;
+      transition: opacity 0.35s ease, transform 0.45s ease;
+    }
+
+    .lyrics-list.is-swapping {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    .lyric-line {
+      display: block;
+      width: 100%;
+      text-align: left;
+      font-size: clamp(1.25rem, 3vw, 1.9rem);
+      font-weight: 800;
+      line-height: 1.3;
+      letter-spacing: -0.3px;
+      color: rgba(0, 0, 0, 0.55);
+      padding: 0.35rem 0;
+      cursor: pointer;
+      transition: color 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease;
+      transform-origin: left center;
+    }
+
+    .lyric-line:hover {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .lyric-line.is-past {
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .lyric-line.is-active {
+      color: #fff;
+      transform: scale(1.03);
+      text-shadow: 0 2px 18px rgba(0, 0, 0, 0.18);
+    }
+
+    /* Completion overlay */
+    .exam-done {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      text-align: center;
+      padding: 1.5rem;
+      background: rgba(10, 10, 12, 0.92);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s;
+      z-index: 5;
+    }
+
+    .exam-done.is-visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .exam-done h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 6vw, 3rem);
+      letter-spacing: 1px;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .exam-done p {
+      color: var(--text-secondary);
+      max-width: 440px;
+    }
+
+    .exam-done-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    .exam-done-actions a,
+    .exam-done-actions button {
+      padding: 0.75rem 1.3rem;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .btn-done-primary {
+      background: var(--hub-orange);
+      color: #000;
+    }
+
+    .btn-done-outline {
+      border: 1px solid var(--border-light);
+      color: #ddd;
+    }
+
+    .btn-done-outline:hover {
+      border-color: var(--hub-orange);
+      color: #fff;
+    }
+
+    .exam-disclaimer {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 1.25rem;
+    }
+
+    @media (max-width: 768px) {
+      .exam-header {
+        padding: 0.75rem 1rem;
+      }
+
+      .exam-main {
+        padding: 0 1rem 2rem;
+      }
+
+      .exam-heading {
+        margin: 0.25rem 0 1rem;
+      }
+
+      .exam-heading p {
+        font-size: 0.85rem;
+      }
+
+      .exam-stage {
+        height: 300px;
+      }
+
+      .exam-slide {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto;
+        gap: 0.5rem;
+        padding: 1rem 1.1rem 1.25rem;
+        text-align: center;
+      }
+
+      .exam-visual svg {
+        max-height: 170px;
+      }
+
+      .exam-slide h2 {
+        margin: 0.25rem 0 0.35rem;
+      }
+
+      .exam-slide .exam-summary {
+        font-size: 0.85rem;
+      }
+
+      .exam-time,
+      .exam-step-label {
+        min-width: 70px;
+        font-size: 0.78rem;
+      }
+
+      .lyrics-panel {
+        padding: 1.1rem 1.1rem 0;
+      }
+
+      .lyrics-scroll {
+        height: 240px;
+        padding-bottom: 120px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .exam-visual * {
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="dark-theme">
+  <header class="exam-header">
+    <a href="./" class="site-logo-badge" title="Back to CheckHub">
+      <span class="logo-text">Check</span><span class="hub-pill">Hub</span>
+    </a>
+    <a href="./" class="exam-back">← Back to video</a>
+  </header>
+
+  <main class="exam-main">
+    <div class="exam-heading">
+      <h1>Your 3-Minute Breast Self-Exam</h1>
+      <p>Follow along. Six steps, about 30 seconds each.</p>
+    </div>
+
+    <div class="exam-progress" id="examProgress"></div>
+
+    <section class="exam-stage" id="examStage" aria-live="polite">
+      <div class="exam-done" id="examDone">
+        <h2>Check complete</h2>
+        <p>Nice work. Repeat this once a month, and see a doctor if you notice anything new or different.</p>
+        <div class="exam-done-actions">
+          <a href="./" class="btn-done-primary">Back to video</a>
+          <button type="button" class="btn-done-outline" id="examRestart">Start again</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="exam-controls">
+      <span class="exam-time" id="examTime">0:00 / 3:00</span>
+      <div class="exam-buttons">
+        <button type="button" class="exam-btn" id="examPrev" aria-label="Previous step">
+          <svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg>
+        </button>
+        <button type="button" class="exam-btn play" id="examPlay" aria-label="Pause">
+          <svg viewBox="0 0 24 24" id="examPlayIcon"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+        </button>
+        <button type="button" class="exam-btn" id="examNext" aria-label="Next step">
+          <svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5l11 7-11 7z"/></svg>
+        </button>
+      </div>
+      <span class="exam-step-label" id="examStepLabel">Step 1 of 6</span>
+    </div>
+
+    <section class="lyrics-panel" id="lyricsPanel">
+      <div class="lyrics-panel-head">
+        <span>Instructions</span>
+        <span id="lyricsStepTitle"></span>
+      </div>
+      <div class="lyrics-scroll" id="lyricsScroll">
+        <div class="lyrics-list" id="lyricsList"></div>
+      </div>
+    </section>
+
+    <p class="exam-disclaimer">This guide is for awareness only and does not replace a clinical breast exam or mammogram. If you notice any change, talk to a doctor.</p>
+  </main>
+
+  <script>
+    // Silhouette shared by the mirror steps
+    const TORSO = `
+      <circle cx="160" cy="62" r="24" class="ill-line"/>
+      <path d="M110 230 C110 150 128 112 160 112 C192 112 210 150 210 230" class="ill-line ill-fill"/>`;
+
+    const STEPS = [
+      {
+        title: "Look in the mirror",
+        summary: "Stand straight, arms at your sides, and look for any visible change.",
+        color: "#b5520b",
+        svg: `
+          <rect x="70" y="14" width="180" height="240" rx="18" class="ill-soft"/>
+          <g class="anim-breathe">${TORSO}
+            <path d="M118 128 L100 210" class="ill-line"/><path d="M202 128 L220 210" class="ill-line"/>
+          </g>
+          <path d="M84 40 L104 26" class="ill-soft"/><path d="M84 60 L120 34" class="ill-soft"/>`,
+        lines: [
+          "Stand in front of a mirror, shoulders straight, arms at your sides.",
+          "Look at both breasts: their usual size, shape and colour.",
+          "Watch for any dimpling, puckering or bulging of the skin.",
+          "Notice a nipple that has changed position or turned inward.",
+          "Look for redness, soreness, a rash or swelling.",
+          "Small differences between sides are normal. You're looking for change."
+        ]
+      },
+      {
+        title: "Raise your arms",
+        summary: "Lift your arms high and look again from a new angle.",
+        color: "#8c2f5c",
+        svg: `
+          <rect x="70" y="14" width="180" height="240" rx="18" class="ill-soft"/>
+          ${TORSO}
+          <path d="M122 124 L96 36" class="ill-line anim-raise left"/>
+          <path d="M198 124 L224 36" class="ill-line anim-raise right"/>
+          <path d="M150 170 h20" class="ill-soft"/>`,
+        lines: [
+          "Now raise both arms high above your head.",
+          "Look for the same changes from this new angle.",
+          "Then press your hands firmly on your hips and flex your chest muscles.",
+          "Turn slowly side to side to see the outer edges.",
+          "Any new dimple or pull in the skin is worth noting.",
+          "Take your time. There's no rush."
+        ]
+      },
+      {
+        title: "Check the nipples",
+        summary: "Look closely at each nipple for discharge or skin changes.",
+        color: "#1f5f73",
+        svg: `
+          <circle cx="160" cy="130" r="70" class="ill-soft"/>
+          <circle cx="160" cy="130" r="22" class="ill-line ill-fill anim-pop"/>
+          <circle cx="160" cy="130" r="40" class="ill-line anim-ring"/>
+          <circle cx="160" cy="130" r="40" class="ill-line anim-ring delay"/>
+          <g class="anim-scan"><circle cx="160" cy="130" r="46" class="ill-soft"/><path d="M193 163 L232 202" class="ill-line"/></g>`,
+        lines: [
+          "Gently look at each nipple and the area around it.",
+          "Check for any fluid or discharge: watery, milky, yellow or bloody.",
+          "Notice scaling, crusting or flaky skin on the nipple.",
+          "Note any nipple that has recently become inverted.",
+          "Discharge from one side, without squeezing, should be checked.",
+          "Learn what's normal for you, so you can spot what isn't."
+        ]
+      },
+      {
+        title: "Lie down and feel",
+        summary: "Use the pads of three fingers in small, coin-sized circles.",
+        color: "#2f6b3a",
+        svg: `
+          <circle cx="160" cy="130" r="80" class="ill-soft"/>
+          <circle cx="160" cy="130" r="50" class="ill-soft"/>
+          <circle cx="160" cy="130" r="20" class="ill-soft"/>
+          <g class="anim-orbit">
+            <circle cx="160" cy="80" r="12" class="ill-line ill-fill"/>
+            <circle cx="145" cy="72" r="9" class="ill-line"/><circle cx="175" cy="72" r="9" class="ill-line"/>
+          </g>
+          <text x="160" y="250" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-family="JetBrains Mono" font-size="12">LIGHT · MEDIUM · FIRM</text>`,
+        lines: [
+          "Lie down on your back and put your right arm behind your head.",
+          "Use the pads of the three middle fingers on your left hand.",
+          "Move in small, coin-sized circles over your right breast.",
+          "Use light pressure first, then medium, then firm.",
+          "Cover everything: collarbone to upper belly, armpit to cleavage.",
+          "Then switch sides and repeat on your left breast."
+        ]
+      },
+      {
+        title: "Follow a pattern",
+        summary: "Move up and down in strips so you don't miss any area.",
+        color: "#6b3fa0",
+        svg: `
+          <rect x="40" y="34" width="240" height="192" rx="14" class="ill-soft"/>
+          <path d="M60 50 V210 H100 V50 H140 V210 H180 V50 H220 V210 H260 V50" class="ill-soft" stroke-dasharray="6 6"/>
+          <circle r="11" class="ill-dot">
+            <animateMotion dur="9s" repeatCount="indefinite" path="M60 50 V210 H100 V50 H140 V210 H180 V50 H220 V210 H260 V50"/>
+          </circle>`,
+        lines: [
+          "Use an up-and-down pattern, like mowing a lawn.",
+          "Start at the armpit and move across in vertical strips.",
+          "Keep your fingers flat and together as you move.",
+          "Feel for lumps, thickening, hard knots or anything different.",
+          "Don't forget the armpit, where the lymph nodes sit.",
+          "Many people repeat this in the shower, where soapy skin helps."
+        ]
+      },
+      {
+        title: "Know when to see a doctor",
+        summary: "Most lumps aren't cancer, but every new change deserves a check.",
+        color: "#a3243b",
+        svg: `
+          <rect x="80" y="40" width="160" height="170" rx="14" class="ill-line ill-fill"/>
+          <path d="M80 82 H240" class="ill-line"/>
+          <path d="M118 28 V52 M202 28 V52" class="ill-line"/>
+          <circle cx="160" cy="146" r="30" class="ill-line anim-pop"/>
+          <path d="M146 146 l10 10 l20 -20" class="ill-line"/>`,
+        lines: [
+          "Most lumps are not cancer, but every new change deserves a check.",
+          "See a doctor if you find a new lump, dimpling or nipple change.",
+          "Also see a doctor for discharge, lasting pain or skin changes.",
+          "Do this check once a month, a few days after your period ends.",
+          "If you don't have periods, pick the same day each month.",
+          "You've finished your 3-minute check. See you next month."
+        ]
+      }
+    ];
+
+    const LINE_MS = 5000;
+    const STEP_MS = LINE_MS * 6;
+    const TOTAL_MS = STEP_MS * STEPS.length;
+
+    const stage = document.getElementById("examStage");
+    const progressEl = document.getElementById("examProgress");
+    const timeEl = document.getElementById("examTime");
+    const stepLabel = document.getElementById("examStepLabel");
+    const playBtn = document.getElementById("examPlay");
+    const playIcon = document.getElementById("examPlayIcon");
+    const lyricsPanel = document.getElementById("lyricsPanel");
+    const lyricsScroll = document.getElementById("lyricsScroll");
+    const lyricsList = document.getElementById("lyricsList");
+    const lyricsStepTitle = document.getElementById("lyricsStepTitle");
+    const doneEl = document.getElementById("examDone");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const ICON_PAUSE = '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
+    const ICON_PLAY = '<path d="M7 4l13 8-13 8z"/>';
+
+    let stepIndex = 0;
+    let elapsed = 0;          // ms within the current step
+    let playing = true;
+    let lastTick = null;
+    let activeLine = -1;
+
+    // Build slides + progress segments
+    STEPS.forEach((step, i) => {
+      const slide = document.createElement("article");
+      slide.className = "exam-slide";
+      slide.innerHTML = `
+        <div class="exam-visual"><svg viewBox="0 0 320 260" aria-hidden="true">${step.svg}</svg></div>
+        <div>
+          <div class="exam-step-num">Step ${i + 1} of ${STEPS.length}</div>
+          <h2>${step.title}</h2>
+          <p class="exam-summary">${step.summary}</p>
+        </div>`;
+      stage.insertBefore(slide, doneEl);
+
+      const seg = document.createElement("div");
+      seg.className = "exam-progress-seg";
+      seg.innerHTML = "<span></span>";
+      seg.addEventListener("click", () => goToStep(i));
+      progressEl.appendChild(seg);
+    });
+
+    const slides = stage.querySelectorAll(".exam-slide");
+    const segFills = progressEl.querySelectorAll(".exam-progress-seg span");
+
+    function formatTime(ms) {
+      const s = Math.floor(ms / 1000);
+      return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+    }
+
+    function renderLyrics() {
+      const step = STEPS[stepIndex];
+      lyricsList.classList.add("is-swapping");
+      setTimeout(() => {
+        lyricsList.innerHTML = step.lines
+          .map((line, i) => `<button type="button" class="lyric-line" data-i="${i}">${line}</button>`)
+          .join("");
+        lyricsList.querySelectorAll(".lyric-line").forEach(btn => {
+          btn.addEventListener("click", () => {
+            elapsed = Number(btn.dataset.i) * LINE_MS;
+            activeLine = -1;
+            update();
+          });
+        });
+        lyricsScroll.scrollTop = 0;
+        activeLine = -1;
+        lyricsList.classList.remove("is-swapping");
+        update();
+      }, 300);
+    }
+
+    function showStep() {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("is-active", i === stepIndex);
+        slide.classList.toggle("is-past", i < stepIndex);
+      });
+      lyricsPanel.style.setProperty("--lyrics-bg", STEPS[stepIndex].color);
+      lyricsStepTitle.textContent = STEPS[stepIndex].title;
+      stepLabel.textContent = `Step ${stepIndex + 1} of ${STEPS.length}`;
+      doneEl.classList.remove("is-visible");
+      renderLyrics();
+    }
+
+    function goToStep(i) {
+      stepIndex = Math.max(0, Math.min(STEPS.length - 1, i));
+      elapsed = 0;
+      setPlaying(true);
+      showStep();
+    }
+
+    function setPlaying(value) {
+      playing = value;
+      lastTick = null;
+      playIcon.innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
+      playBtn.setAttribute("aria-label", playing ? "Pause" : "Play");
+    }
+
+    function update() {
+      segFills.forEach((fill, i) => {
+        const pct = i < stepIndex ? 100 : i > stepIndex ? 0 : (elapsed / STEP_MS) * 100;
+        fill.style.width = `${pct}%`;
+      });
+      timeEl.textContent = `${formatTime(stepIndex * STEP_MS + elapsed)} / ${formatTime(TOTAL_MS)}`;
+
+      const lineIdx = Math.min(5, Math.floor(elapsed / LINE_MS));
+      if (lineIdx === activeLine) return;
+      activeLine = lineIdx;
+
+      const lines = lyricsList.querySelectorAll(".lyric-line");
+      lines.forEach((line, i) => {
+        line.classList.toggle("is-active", i === lineIdx);
+        line.classList.toggle("is-past", i < lineIdx);
+      });
+      const current = lines[lineIdx];
+      if (current) {
+        lyricsScroll.scrollTo({
+          top: current.offsetTop - lyricsList.offsetTop - 16,
+          behavior: reduceMotion ? "auto" : "smooth"
+        });
+      }
+    }
+
+    function finish() {
+      setPlaying(false);
+      elapsed = STEP_MS;
+      update();
+      doneEl.classList.add("is-visible");
+    }
+
+    function tick(now) {
+      if (playing) {
+        if (lastTick !== null) elapsed += now - lastTick;
+        lastTick = now;
+        if (elapsed >= STEP_MS) {
+          if (stepIndex < STEPS.length - 1) {
+            stepIndex++;
+            elapsed = 0;
+            showStep();
+          } else {
+            finish();
+          }
+        } else {
+          update();
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    playBtn.addEventListener("click", () => {
+      if (doneEl.classList.contains("is-visible")) {
+        goToStep(0);
+        return;
+      }
+      setPlaying(!playing);
+    });
+    document.getElementById("examPrev").addEventListener("click", () => {
+      // Restart the current step if we're a few seconds in, otherwise go back
+      goToStep(elapsed > 3000 ? stepIndex : stepIndex - 1);
+    });
+    document.getElementById("examNext").addEventListener("click", () => {
+      if (stepIndex === STEPS.length - 1) finish();
+      else goToStep(stepIndex + 1);
+    });
+    document.getElementById("examRestart").addEventListener("click", () => goToStep(0));
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === " ") {
+        e.preventDefault();
+        playBtn.click();
+      } else if (e.key === "ArrowRight") {
+        document.getElementById("examNext").click();
+      } else if (e.key === "ArrowLeft") {
+        document.getElementById("examPrev").click();
+      }
+    });
+
+    showStep();
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>

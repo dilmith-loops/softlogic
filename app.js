@@ -396,7 +396,6 @@ const btnEnterSite = document.getElementById("btnEnterSite");
 const btnSkipToGuide = document.getElementById("btnSkipToGuide");
 
 const videoModal = document.getElementById("videoModal");
-const closeVideoModal = document.getElementById("closeVideoModal");
 const playerRevealScreen = document.getElementById("playerRevealScreen");
 const activePlayerBox = document.getElementById("activePlayerBox");
 const btnContinueToVideo = document.getElementById("btnContinueToVideo");
@@ -856,6 +855,7 @@ function triggerGlitchTransition(onComplete) {
 function openVideo(videoId) {
   const vid = VIDEO_DATABASE.find(v => v.id === videoId) || VIDEO_DATABASE[0];
   currentVideo = vid;
+  sessionStorage.setItem("checkhub_current_video", vid.id);
 
   // Populate details
   modalVideoTitle.textContent = vid.title;
@@ -1516,6 +1516,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.remove("age-gate-active");
     ageGateModal.classList.add("fade-out");
     ageGateModal.style.display = "none";
+    // Returning visitor (refresh or back from the exam page): go straight to the player
+    openVideo(sessionStorage.getItem("checkhub_current_video") || "vid-1");
   } else if (ageGateModal) {
     document.body.classList.add("age-gate-active");
   }
@@ -1608,7 +1610,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Video Modal Handlers
-  if (closeVideoModal) closeVideoModal.addEventListener("click", closeVideo);
   if (btnContinueToVideo) btnContinueToVideo.addEventListener("click", () => {});
 
   // Stream switcher button clicks
@@ -1865,7 +1866,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Close modals on Esc key
   window.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
-      closeVideo();
+      // The video player stays open; it is the main page after the age gate
       if (simulatorModal) simulatorModal.classList.add("hidden");
       if (reminderModal) reminderModal.classList.add("hidden");
       if (shareModal) shareModal.classList.add("hidden");

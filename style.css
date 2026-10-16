@@ -1911,6 +1911,24 @@ body:has(#ageGateModal:not(.fade-out):not([style*="display: none"])) {
   background: var(--pink-deep);
 }
 
+.btn-exam {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  color: #000;
+  font-size: 0.9rem;
+  font-weight: 800;
+  padding: 0.7rem 1.2rem;
+  box-shadow: 0 4px 15px rgba(255, 144, 0, 0.4);
+  animation: examPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes examPulse {
+  0%, 100% { box-shadow: 0 4px 15px rgba(255, 144, 0, 0.35); }
+  50% { box-shadow: 0 4px 24px rgba(255, 144, 0, 0.75); }
+}
+
 /* Description Box */
 .video-description-box {
   background: var(--bg-tertiary);
