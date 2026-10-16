@@ -1,0 +1,13 @@
+{
+  "name": "checkhub-softlogic",
+  "version": "1.0.0",
+  "description": "CheckHub Breast Cancer Awareness campaign configured for ai.loopsintegrated.co/softlogic",
+  "main": "index.html",
+  "scripts": {
+    "build": "rm -rf dist softlogic_build.zip && mkdir -p dist/images && cp index.html style.css app.js .htaccess dist/ && cp images/* dist/images/ && cp *.mp4 *.webm dist/ && (cd dist && zip -r ../softlogic_build.zip . -x \"__MACOSX\")",
+    "preview": "npx -y serve dist -l 3000"
+  },
+  "keywords": ["breast-cancer-awareness", "softlogic", "loops-integrated"],
+  "author": "Loops Integrated",
+  "license": "ISC"
+}

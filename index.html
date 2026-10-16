@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CheckHub - The World's Most Important Touch Guide | Early Detection Saves Lives</title>
+  <meta name="description" content="CheckHub looks provocative, but it delivers life-saving breast cancer awareness, self-examination guides, and early detection information. 1 in 8 women will be diagnosed. Check yourself today.">
+  <meta name="keywords" content="breast cancer awareness, self exam guide, early detection, mammogram, checkhub, breast health">
+  <!-- Favicon with pink awareness ribbon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23ff9000%22/><text x=%2250%22 y=%2272%22 font-size=%2266%22 font-family=%22Arial%22 font-weight=%22bold%22 text-anchor=%22middle%22>C</text></svg>">
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Subpath / Trailing Slash Normalization -->
+  <script>
+    if (window.location.pathname === '/softlogic') {
+      window.location.replace('/softlogic/' + window.location.search + window.location.hash);
+    }
+  </script>
+  <link rel="canonical" href="https://ai.loopsintegrated.co/softlogic/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ai.loopsintegrated.co/softlogic/">
+  <meta property="og:title" content="CheckHub - Breast Cancer Awareness & Early Detection">
+  <meta property="og:description" content="1 in 8 women will be diagnosed with breast cancer. Learn the life-saving monthly touch routine and early detection techniques.">
+  <meta property="og:image" content="https://ai.loopsintegrated.co/softlogic/images/thumb_1.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://ai.loopsintegrated.co/softlogic/">
+  <meta property="twitter:title" content="CheckHub - Breast Cancer Awareness & Early Detection">
+  <meta property="twitter:description" content="1 in 8 women will be diagnosed with breast cancer. Learn the life-saving monthly touch routine and early detection techniques.">
+  <meta property="twitter:image" content="https://ai.loopsintegrated.co/softlogic/images/thumb_1.jpg">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme age-gate-active">
+  <!-- Age Verification / Awareness Disclaimer Gate -->
+  <div id="ageGateModal" class="age-gate-overlay">
+    <div class="age-gate-card">
+      <div class="site-logo-badge large age-gate-logo">
+        <span class="logo-text">Check</span><span class="hub-pill">Hub</span>
+      </div>
+      <h2>This is an adult website</h2>
+      <span class="age-gate-notice-pill">Notice to Users</span>
+      <p class="age-gate-desc">
+        This website contains age-restricted materials including nudity and explicit depictions of sexual
+        activity. By entering, you affirm that you are at least 18 years of age or the age of majority in the
+        jurisdiction you are accessing the website from and you consent to viewing sexually explicit content.
+      </p>
+      <span class="age-gate-link">Notice to Law Enforcement</span>
+      <div class="age-gate-actions">
+        <button id="btnEnterSite" class="btn-gate-outline">I am 18 or older - Enter</button>
+        <button id="btnSkipToGuide" class="btn-gate-outline">I am under 18 - Exit</button>
+      </div>
+      <div class="age-gate-parental">
+        <h3>Parental Controls</h3>
+        <p>
+          <a href="https://www.microsoft.com/en-us/microsoft-365/family-safety" target="_blank" rel="noopener">Set up Family Safety</a>,
+          <a href="https://www.rtalabel.org/" target="_blank" rel="noopener">Block Access to Adult Content websites</a>,
+          and enable SafeSearch on your search engine.
+        </p>
+        <p>
+          <a href="https://support.google.com/websearch/answer/510" target="_blank" rel="noopener">Visit our Parental Controls page</a>
+          for step-by-step guidance on blocking access to this website.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reality Distortion / Heavy Pixelated Glitch Transition Overlay -->
+  <div id="glitchOverlay" class="glitch-overlay hidden">
+    <!-- Live Pixelation Canvas Engine -->
+    <canvas id="pixelGlitchCanvas" class="pixel-glitch-canvas"></canvas>
+    
+    <!-- 8-Bit Pixel Matrix & Scanlines -->
+    <div class="glitch-pixel-matrix"></div>
+    <div class="glitch-scanlines"></div>
+    <div class="glitch-color-shift"></div>
+    
+    <!-- Chunky Macroblock Slices -->
+    <div class="glitch-slices">
+      <div class="glitch-bar pixel-bar-1"></div>
+      <div class="glitch-bar pixel-bar-2"></div>
+      <div class="glitch-bar pixel-bar-3"></div>
+      <div class="glitch-bar pixel-bar-4"></div>
+      <div class="glitch-bar pixel-bar-5"></div>
+      <div class="glitch-bar pixel-bar-6"></div>
+      <div class="glitch-bar pixel-bar-7"></div>
+    </div>
+  </div>
+
+  <!-- SVG Distortion Filter for Screen Shatter -->
+  <svg class="glitch-svg-filter" style="position: absolute; width: 0; height: 0;" aria-hidden="true">
+    <filter id="pixelDisplacementFilter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.08 0.6" numOctaves="2" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="28" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
+
+
+  <!-- Main Navigation Header -->
+  <header class="hub-header">
+    <div class="header-container">
+      <!-- Brand Logo -->
+      <a href="#" class="brand-logo" id="logoHome" title="CheckHub Home">
+        <div class="site-logo-badge">
+          <span class="logo-text">Check</span><span class="hub-pill">Hub</span>
+        </div>
+        <span class="badge-sub">AWARENESS</span>
+      </a>
+
+      <!-- Search Bar -->
+      <div class="search-section">
+        <div class="search-input-wrapper">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Search self-exam guides, symptoms, lump detection, mammograms..." autocomplete="off">
+          <button id="clearSearchBtn" class="clear-search-btn" title="Clear">✕</button>
+          <button id="searchBtn" class="search-submit-btn">SEARCH</button>
+        </div>
+        <div id="searchSuggestions" class="search-suggestions hidden"></div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="header-actions">
+        <button id="btnSelfCheckModal" class="action-btn highlight">
+          <span class="btn-icon">🩺</span>
+          <span>Self-Check Guide</span>
+        </button>
+        <button id="btnSetReminder" class="action-btn reminder-btn">
+          <span class="btn-icon">📅</span>
+          <span>Set Monthly Reminder</span>
+        </button>
+        <button id="btnShareCampaign" class="action-btn share-btn" title="Share with friends">
+          <span class="btn-icon">📢</span>
+          <span>Share</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Secondary Categories Navigation Bar -->
+    <nav class="sub-nav">
+      <div class="sub-nav-container">
+        <button class="nav-tab active" data-category="all">
+          <span class="tab-icon">🔥</span> All Videos (<span id="totalVideoCount">12</span>)
+        </button>
+        <button class="nav-tab" data-category="self-exam">
+          <span class="tab-icon">🧴</span> Self-Exam Techniques
+        </button>
+        <button class="nav-tab" data-category="symptoms">
+          <span class="tab-icon">🔍</span> Warning Signs & Lumps
+        </button>
+        <button class="nav-tab" data-category="mammogram">
+          <span class="tab-icon">🏥</span> Mammography & Clinical
+        </button>
+        <button class="nav-tab" data-category="male-cancer">
+          <span class="tab-icon">👨</span> Male Breast Health
+        </button>
+        <button class="nav-tab" data-category="myths">
+          <span class="tab-icon">💡</span> Myths vs Facts
+        </button>
+        <button class="nav-tab" data-category="top-rated">
+          <span class="tab-icon">⭐</span> Top Rated Checks
+        </button>
+      </div>
+    </nav>
+  </header>
+
+
+  <!-- Main Grid Content Area -->
+  <main class="main-container">
+    <!-- Filter Bar & Active Filter Chips -->
+    <div class="content-toolbar">
+      <div class="toolbar-left">
+        <h2 class="section-heading" id="currentSectionTitle">Trending Breast Health Videos</h2>
+        <span class="video-counter" id="visibleCounter">Showing 12 videos</span>
+      </div>
+      <div class="toolbar-right">
+        <label for="sortSelect">Sort by:</label>
+        <select id="sortSelect" class="sort-select">
+          <option value="trending">🔥 Most Watched</option>
+          <option value="rating">⭐ Highest Rated</option>
+          <option value="duration">⏱️ Quickest Checks</option>
+          <option value="newest">✨ Newest Uploads</option>
+        </select>
+        <button id="viewToggleBtn" class="view-toggle" title="Toggle Grid Size">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Active Search Filter Banner (Shows when searching) -->
+    <div id="searchFilterBanner" class="filter-banner hidden">
+      <span>Filtering for: <strong id="filterQueryText"></strong></span>
+      <button id="resetSearchFilter">Clear filter</button>
+    </div>
+
+    <!-- Video Grid -->
+    <div class="video-grid" id="videoGrid">
+      <!-- Dynamically generated via JavaScript -->
+    </div>
+  </main>
+
+  <!-- Video Playback & Awareness Reveal Modal -->
+  <div id="videoModal" class="modal-overlay hidden">
+    <div class="video-modal-dialog">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div class="modal-brand">
+          <span class="logo-text">Check</span><span class="hub-pill">Hub</span>
+          <span class="modal-title-pill">NOW PLAYING: AWARENESS SPECIAL</span>
+        </div>
+        <button id="closeVideoModal" class="close-modal-btn" title="Close Video">✕</button>
+      </div>
+
+      <div class="watch-layout">
+      <div class="watch-main">
+      <!-- Video Player Container -->
+      <div class="player-wrapper">
+        <video id="html5VideoPlayer" class="video-element" controls autoplay playsinline loop preload="auto" src="breast_cancer_awareness.mp4">
+          <source src="breast_cancer_awareness.mp4" type="video/mp4">
+          <source src="breast_cancer_psa.mp4" type="video/mp4">
+          <source src="breast_exam_video.webm" type="video/webm">
+          Your browser does not support HTML5 video.
+        </video>
+        <!-- Video Overlay Watermark -->
+        <div class="player-watermark">
+          <span class="wm-logo">CheckHub</span>
+          <span class="wm-tag">BREAST CANCER AWARENESS</span>
+        </div>
+      </div>
+
+      <!-- Awareness Stream Channel Switcher -->
+      <div class="awareness-video-switcher">
+        <span class="switcher-label">📺 Awareness Stream:</span>
+        <button class="btn-stream-switch active" data-src="breast_cancer_awareness.mp4" title="Doctor FAQs, 1 in 8 statistics, and self-check guide">
+          Doctor FAQs &amp; Awareness Guide
+        </button>
+        <button class="btn-stream-switch" data-src="breast_cancer_psa.mp4" title="Official Breast Cancer Awareness Coalition PSA">
+          📢 Awareness Coalition PSA
+        </button>
+        <button class="btn-stream-switch" data-src="breast_exam_video.webm" title="Clinical Palpation Examination Walkthrough">
+          🩺 Clinical Palpation Exam
+        </button>
+      </div>
+
+      <!-- Video Details & Interactive Action Section -->
+      <div class="modal-body">
+        <div class="video-info-primary">
+          <h2 id="modalVideoTitle" class="video-main-title">Hands-On Action: Complete Shower Technique</h2>
+          
+          <div class="video-stats-bar">
+            <div class="stats-left">
+              <span class="views-count" id="modalViews">👁️ 2,491,200 views</span>
+              <span class="date-posted" id="modalDate">Added 2 days ago</span>
+              <span class="verified-tag">✓ Medically Reviewed</span>
+            </div>
+            <div class="stats-right">
+              <button class="interaction-btn like-btn" id="modalLikeBtn">
+                👍 <span id="modalLikes">124K</span>
+              </button>
+              <button class="interaction-btn dislike-btn" id="modalDislikeBtn">
+                👎 <span>42</span>
+              </button>
+              <button class="interaction-btn share-btn-modal" id="modalShareBtn">
+                🔗 Share PSA
+              </button>
+              <button class="interaction-btn save-btn" id="modalSaveBtn">
+                ⭐ Save Guide
+              </button>
+            </div>
+          </div>
+
+          <!-- Video Channel Info -->
+          <div class="uploader-profile">
+            <div class="uploader-avatar">🩺</div>
+            <div class="uploader-details">
+              <div class="uploader-name">
+                <span id="modalAuthor">Dr. Angela Reed, M.D. - Breast Health Specialist</span>
+                <span class="channel-verified">✓</span>
+              </div>
+              <div class="uploader-subs">1.4M Medical Awareness Subscribers</div>
+            </div>
+            <button class="btn-subscribe" id="btnSubscribe">
+              + BOOKMARK PROTOCOL
+            </button>
+          </div>
+
+          <!-- Video Description & Educational Bullet Points -->
+          <div class="video-description-box">
+            <p id="modalDescription" class="modal-desc-text">
+              In this essential walkthrough, Dr. Angela Reed demonstrates the circular palpation technique you can do while showering. Soap reduces friction, enabling you to feel minute changes or firm masses in breast tissue.
+            </p>
+            <div class="key-points-box">
+              <h4>🎯 What To Look For During This Check:</h4>
+              <ul id="modalKeyPoints">
+                <li>Use the pads of 3 middle fingers, never just pinch with fingertips</li>
+                <li>Make overlapping coin-sized circles across the entire chest wall</li>
+                <li>Check lymph nodes in armpits for painless firm swelling</li>
+                <li>Note any dimpling, puckering, or fluid secretion</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons Inside Modal -->
+          <div class="modal-cta-buttons">
+            <button class="btn-cta-pink" id="btnModalReminder">
+              📅 Set Monthly Calendar Reminder
+            </button>
+            <button class="btn-cta-outline" id="btnModalShareTeaser">
+              📢 Prank A Friend To Save Their Life
+            </button>
+            <a href="https://www.nationalbreastcancer.org/breast-self-exam" target="_blank" rel="noopener noreferrer" class="btn-cta-outline">
+              🌐 Visit National Breast Cancer Org ↗
+            </a>
+          </div>
+
+          <!-- Interactive Comments Section -->
+          <div class="modal-comments-section">
+            <div class="comments-header">
+              <h3>Community Discussion (<span id="commentCount">142</span> Comments)</h3>
+              <span class="comment-sort">Top Comments</span>
+            </div>
+
+            <!-- Add Comment Form -->
+            <form id="commentForm" class="add-comment-row">
+              <div class="comment-user-avatar">👤</div>
+              <input type="text" id="commentInput" placeholder="Add a public comment or survivor message..." required>
+              <button type="submit" class="btn-comment-submit">COMMENT</button>
+            </form>
+
+            <!-- Comments List -->
+            <div class="comments-list" id="commentsList">
+              <!-- Dynamically rendered -->
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <!-- Recommended Videos Sidebar (blurred thumbnails) -->
+      <aside class="watch-sidebar">
+        <h3 class="watch-sidebar-title">Recommended</h3>
+        <div id="relatedVideos" class="related-list">
+          <!-- Dynamically rendered -->
+        </div>
+      </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Simulator Modal -->
+  <div id="simulatorModal" class="modal-overlay hidden">
+    <div class="simulator-dialog">
+      <div class="modal-header">
+        <div class="modal-brand">
+          <span class="logo-text">Touch</span><span class="hub-pill">Simulator</span>
+          <span class="modal-title-pill">VIRTUAL PALPATION TEST</span>
+        </div>
+        <button id="closeSimulatorModal" class="close-modal-btn">✕</button>
+      </div>
+      <div class="simulator-body">
+        <div class="simulator-instructions">
+          <h3>🩺 Virtual Touch Simulator</h3>
+          <p>
+            Move your cursor (or finger) across the breast quadrant canvas below. Click and hold to palpate at different depths. 
+            Can you locate the suspicious hard mass versus normal fibrocystic glandular tissue?
+          </p>
+          <div class="tissue-legend">
+            <div class="legend-item"><span class="color-dot normal"></span> Normal Tissue (Soft / Spongy)</div>
+            <div class="legend-item"><span class="color-dot benign"></span> Benign Cyst (Smooth / Mobile)</div>
+            <div class="legend-item"><span class="color-dot suspicious"></span> Suspicious Nodule (Hard / Fixed)</div>
+          </div>
+        </div>
+
+        <div class="canvas-interactive-wrapper">
+          <canvas id="touchSimulatorCanvas" width="600" height="400"></canvas>
+          <div id="simulatorFeedback" class="sim-feedback">
+            Hover and press down on the tissue to feel the resistance...
+          </div>
+        </div>
+
+        <div class="sim-controls">
+          <button id="simDepthLight" class="btn-depth active">Light Pressure (Skin)</button>
+          <button id="simDepthMedium" class="btn-depth">Medium Pressure (Gland)</button>
+          <button id="simDepthDeep" class="btn-depth">Deep Pressure (Chest Wall)</button>
+          <button id="btnResetSim" class="btn-reset-sim">Reset Tissue Map</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Set Monthly Reminder Modal -->
+  <div id="reminderModal" class="modal-overlay hidden">
+    <div class="reminder-dialog">
+      <div class="modal-header">
+        <div class="modal-brand">
+          <span class="logo-text">Check</span><span class="hub-pill">Reminder</span>
+        </div>
+        <button id="closeReminderModal" class="close-modal-btn">✕</button>
+      </div>
+      <div class="reminder-body">
+        <div class="reminder-icon-top">📅</div>
+        <h3>Set Your Monthly 3-Minute Routine</h3>
+        <p>Consistency is key. Performing your self-check once a month helps you build muscle memory of what is normal for your body.</p>
+        
+        <form id="reminderForm" class="reminder-form">
+          <div class="form-group">
+            <label for="reminderDay">Preferred Day of the Month:</label>
+            <select id="reminderDay" class="form-select">
+              <option value="1">1st of every month</option>
+              <option value="5">5th of every month</option>
+              <option value="10" selected>10th of every month (Recommended: post-period)</option>
+              <option value="15">15th of every month</option>
+              <option value="25">25th of every month</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="reminderName">Your Name / Reminder Label:</label>
+            <input type="text" id="reminderName" class="form-input" placeholder="e.g. Monthly Breast Check" value="My Monthly Self-Exam">
+          </div>
+          <div class="reminder-actions">
+            <button type="button" id="btnDownloadCalendar" class="btn-primary-hub">
+              📥 Download .ICS Calendar Event
+            </button>
+            <button type="button" id="btnBrowserNotification" class="btn-secondary-hub">
+              🔔 Enable Browser Notification
+            </button>
+          </div>
+        </form>
+        <div id="reminderStatus" class="reminder-status hidden"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Share / Prank Campaign Modal -->
+  <div id="shareModal" class="modal-overlay hidden">
+    <div class="share-dialog">
+      <div class="modal-header">
+        <div class="modal-brand">
+          <span class="logo-text">Share</span><span class="hub-pill">CheckHub</span>
+        </div>
+        <button id="closeShareModal" class="close-modal-btn">✕</button>
+      </div>
+      <div class="share-body">
+        <div class="share-icon-top">📢</div>
+        <h3>Bait-and-Switch A Friend To Save Their Life</h3>
+        <p>
+          Send this link with a cheeky preview title. When they click, they'll be greeted with breast cancer awareness information that could make all the difference.
+        </p>
+
+        <div class="share-link-box">
+          <input type="text" id="shareUrlInput" readonly value="https://ai.loopsintegrated.co/softlogic/">
+          <button id="btnCopyShareUrl" class="btn-copy">Copy Link</button>
+        </div>
+
+        <div class="social-share-buttons">
+          <button id="shareWhatsApp" class="social-btn whatsapp">
+            💬 Share via WhatsApp
+          </button>
+          <button id="shareTwitter" class="social-btn twitter">
+            🐦 Share on X / Twitter
+          </button>
+          <button id="shareTelegram" class="social-btn telegram">
+            ✈️ Share on Telegram
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="hub-footer">
+    <div class="footer-top">
+      <div class="footer-col brand-col">
+        <div class="site-logo-badge">
+          <span class="logo-text">Check</span><span class="hub-pill">Hub</span>
+        </div>
+        <p class="footer-mission">
+          CheckHub is a creative parody public service awareness campaign dedicated to destigmatizing breast self-examinations, increasing early detection rates, and saving lives through provocative health communication.
+        </p>
+        <div class="footer-ribbon-badge">
+          Proud Supporter of Breast Cancer Awareness Month
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Lifesaving Resources</h4>
+        <ul>
+          <li><a href="https://www.cancer.org/cancer/types/breast-cancer.html" target="_blank" rel="noopener">American Cancer Society ↗</a></li>
+          <li><a href="https://www.nationalbreastcancer.org/" target="_blank" rel="noopener">National Breast Cancer Foundation ↗</a></li>
+          <li><a href="https://knowyourlemons.com/" target="_blank" rel="noopener">Know Your Lemons Foundation ↗</a></li>
+          <li><a href="https://breastcancernow.org/" target="_blank" rel="noopener">Breast Cancer Now (UK) ↗</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Clinical Screening</h4>
+        <ul>
+          <li><a href="#interactiveGuideSection">4-Step Palpation Technique</a></li>
+          <li><a href="#" id="footerMammogramLink">Mammogram Guidelines</a></li>
+          <li><a href="#" id="footerMaleCancerLink">Male Breast Health Guide</a></li>
+          <li><a href="#" id="footerFindClinicLink">Find a Free Screening Center</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Medical Disclaimer</h4>
+        <p class="disclaimer-text">
+          CheckHub does not provide clinical diagnosis. A breast self-exam is a valuable screening tool, but it does NOT replace annual clinical checkups or screening mammograms recommended by health professionals.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="copyright">
+        © 2026 CheckHub Awareness Initiative. All rights reserved. Made with ❤️ to save lives worldwide.
+      </div>
+      <div class="footer-tags">
+        <span>No Real Adult Content</span> • 
+        <span>100% Medically Approved Advice</span> • 
+        <span>Early Detection Saves Lives</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>

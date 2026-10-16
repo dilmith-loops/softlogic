@@ -1,0 +1,11 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+softlogic_build.zip
+
+# Node modules
+node_modules/
+npm-debug.log*
